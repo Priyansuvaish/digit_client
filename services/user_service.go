@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"github.com/Priyansuvaish/digit_client/client"
 	"github.com/Priyansuvaish/digit_client/models"
 )
@@ -19,7 +20,7 @@ func NewUserService(apiClient *client.APIClient) *UserService {
 	}
 }
 
-// CreateCitizen creates a new citizen user
+// CreateCitizen creates a new citizen user in the DIGIT platform
 func (s *UserService) CreateCitizen(citizenUser *models.CitizenUser, requestInfo *models.RequestInfo) (interface{}, error) {
 	payload := map[string]interface{}{
 		"RequestInfo": requestInfo.ToMap(),
@@ -30,7 +31,7 @@ func (s *UserService) CreateCitizen(citizenUser *models.CitizenUser, requestInfo
 	return s.apiClient.Post(endpoint, payload, nil, true)
 }
 
-// GetUserDetails retrieves user details
+// GetUserDetails retrieves user details using access token
 func (s *UserService) GetUserDetails(tenantID string, requestInfo *models.RequestInfo) (interface{}, error) {
 	payload := map[string]interface{}{
 		"RequestInfo": requestInfo.ToMap(),
@@ -40,9 +41,12 @@ func (s *UserService) GetUserDetails(tenantID string, requestInfo *models.Reques
 		"tenantId": tenantID,
 	}
 
-	// Add auth token from RequestInfo if available
-	if requestInfo.AuthToken != "" {
-		params["access_token"] = requestInfo.AuthToken
+	// Get auth token from RequestInfo
+	requestInfoMap := requestInfo.ToMap()
+	if authToken, ok := requestInfoMap["authToken"].(string); ok && authToken != "" {
+		params["access_token"] = authToken
+	} else {
+		return nil, fmt.Errorf("no access token provided and no auth token found in RequestInfo")
 	}
 
 	endpoint := s.baseURL + "/_details"

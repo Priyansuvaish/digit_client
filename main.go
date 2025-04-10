@@ -15,25 +15,36 @@ func main() {
 	// Create user service
 	userService := services.NewUserService(apiClient)
 
-	// Create request info
-	requestInfo := &models.RequestInfo{
-		AuthToken: "your-auth-token-here", // Replace with actual auth token
-	}
+	// Create request info using builder pattern
+	requestInfo := models.RequestInfoBuilder().
+		WithAuthToken("your-auth-token-here"). // Replace with actual auth token
+		WithAPIID("digit").
+		WithVersion("1.0").
+		WithAction("create").
+		WithUserInfo(map[string]interface{}{
+			"id": "1",
+			"name": "System",
+		})
 
-	// Example: Create a new citizen user
-	citizenUser := &models.CitizenUser{
-		UserName:     "testuser123",
-		Password:     "Test@123",
-		Salutation:   "Mr",
-		Name:         "Test User",
-		Gender:       "Male",
-		MobileNumber: "9876543210",
-		EmailID:      "test@example.com",
-		Active:       true,
-		Locale:       "en_IN",
-		Type:         "CITIZEN",
-		TenantID:     "pb",
-	}
+	// Example: Create a new citizen user using builder pattern
+	citizenUser := models.CreateCitizenUser().
+		WithUserName("testuser123").
+		WithPassword("Test@123").
+		WithSalutation("Mr").
+		WithName("Test User").
+		WithGender("Male").
+		WithMobileNumber("9876543210").
+		WithEmailID("test@example.com").
+		WithActive(true).
+		WithLocale("en_IN").
+		WithType("CITIZEN").
+		WithTenantID("pb").
+		WithRoles([]models.Role{
+			*models.RoleBuilder().
+				WithCode("CITIZEN").
+				WithName("Citizen").
+				WithTenantID("pb"),
+		})
 
 	// Create citizen
 	result, err := userService.CreateCitizen(citizenUser, requestInfo)
@@ -42,11 +53,13 @@ func main() {
 	}
 	fmt.Printf("Create Citizen Response: %v\n", result)
 
-	// Example: Search users
-	searchCriteria := &models.UserSearchModel{
-		TenantID: "pb",
-		// Add other search criteria as needed
-	}
+	// Example: Search users using builder pattern
+	searchCriteria := models.UserSearchBuilder().
+		WithTenantID("pb").
+		WithUserName("testuser123").
+		WithActive(true).
+		WithPageSize(10).
+		WithPageNumber(0)
 
 	searchResult, err := userService.SearchUsers(searchCriteria, requestInfo)
 	if err != nil {
@@ -60,4 +73,18 @@ func main() {
 		log.Fatalf("Error getting user details: %v", err)
 	}
 	fmt.Printf("User Details Response: %v\n", userDetails)
+
+	// Example: Update user profile
+	updatedProfile := models.CreateCitizenUser().
+		WithUserName("testuser123").
+		WithName("Updated Test User").
+		WithEmailID("updated@example.com").
+		WithMobileNumber("9876543210").
+		WithTenantID("pb")
+
+	updateResult, err := userService.UpdateProfile(updatedProfile, requestInfo)
+	if err != nil {
+		log.Fatalf("Error updating profile: %v", err)
+	}
+	fmt.Printf("Update Profile Response: %v\n", updateResult)
 } 

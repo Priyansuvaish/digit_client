@@ -3,7 +3,6 @@ package models
 import (
 	"fmt"
 )
-
 // AuthorizationRequest represents an authorization request in the system
 type AuthorizationRequest struct {
 	Roles     []Role
@@ -42,36 +41,36 @@ func (a *AuthorizationRequest) ToMap() map[string]interface{} {
 
 // AuthorizationRequestBuilder creates a new AuthorizationRequestBuilder
 func AuthorizationRequestBuilder() *AuthorizationRequest {
-	return &AuthorizationRequestBuilder{
-		roles:     make([]Role, 0),
-		tenantIDs: make([]string, 0),
+	return &AuthorizationRequest{
+		Roles:     make([]Role, 0),
+		TenantIDs: make([]string, 0),
 	}
 }
 
 // WithURI sets the URI for the authorization request
-func (b *AuthorizationRequestBuilder) WithURI(uri string) *AuthorizationRequest {
-	b.uri = uri
+func (b *AuthorizationRequest) WithURI(uri string) *AuthorizationRequest {
+	b.URI = uri
 	return b
 }
 
 // AddRole adds a role to the authorization request
-func (b *AuthorizationRequestBuilder) AddRole(role Role) *AuthorizationRequest {
-	b.roles = append(b.roles, role)
+func (b *AuthorizationRequest) AddRole(role Role) *AuthorizationRequest {
+	b.Roles = append(b.Roles, role)
 	return b
 }
 
 // AddTenantID adds a tenant ID to the authorization request
-func (b *AuthorizationRequestBuilder) AddTenantID(tenantID string) *AuthorizationRequest {
-	b.tenantIDs = append(b.tenantIDs, tenantID)
+func (b *AuthorizationRequest) AddTenantID(tenantID string) *AuthorizationRequest {
+	b.TenantIDs = append(b.TenantIDs, tenantID)
 	return b
 }
 
 // Build creates and validates a new AuthorizationRequest
-func (b *AuthorizationRequestBuilder) Build() (*AuthorizationRequest, error) {
+func (b *AuthorizationRequest) Build() (*AuthorizationRequest, error) {
 	request := &AuthorizationRequest{
-		Roles:     b.roles,
-		URI:       b.uri,
-		TenantIDs: b.tenantIDs,
+		Roles:     b.Roles,
+		URI:       b.URI,
+		TenantIDs: b.TenantIDs,
 	}
 
 	if err := request.Validate(); err != nil {

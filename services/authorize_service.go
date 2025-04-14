@@ -21,6 +21,13 @@ func NewAuthorizeService(apiClient *client.APIClient) *AuthorizeService {
 
 // AuthorizeAction authorizes an action based on roles and tenant permissions
 func (s *AuthorizeService) AuthorizeAction(authorizationRequest *models.AuthorizationRequest, requestInfo *models.RequestInfo) (interface{}, error) {
+	
+	if requestInfo == nil {
+		// Get the singleton instance of RequestConfig
+		requestConfig := (&models.RequestConfig{}).GetInstance()
+		// Call GetRequestInfo on the instance
+		requestInfo = requestConfig.GetRequestInfo("", nil)
+	}
 	payload := map[string]interface{}{
 		"RequestInfo":         requestInfo.ToMap(),
 		"AuthorizationRequest": authorizationRequest.ToMap(),
@@ -30,13 +37,16 @@ func (s *AuthorizeService) AuthorizeAction(authorizationRequest *models.Authoriz
 	return s.apiClient.Post(endpoint, payload, nil, true)
 }
 
-// GetMDMSAction gets MDMS action details
+GetMDMSAction gets MDMS action details
 func (s *AuthorizeService) GetMDMSAction(actionRequest *models.ActionRequest, requestInfo *models.RequestInfo) (interface{}, error) {
 	// If requestInfo is provided, update the actionRequest's requestInfo
-	if requestInfo != nil {
-		actionRequest.RequestInfo = requestInfo
+	if requestInfo == nil {
+		// Get the singleton instance of RequestConfig
+		requestConfig := (&models.RequestConfig{}).GetInstance()
+		// Call GetRequestInfo on the instance
+		requestInfo = requestConfig.GetRequestInfo("", nil)
 	}
-
+	actionRequest.RequestInfo = requestInfo
 	payload := actionRequest.ToMap()
 
 	endpoint := s.baseURL + "/actions/mdms/_get"

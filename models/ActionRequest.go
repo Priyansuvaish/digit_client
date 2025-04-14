@@ -3,7 +3,6 @@ package models
 import (
 	"errors"
 	"time"
-	"github.com/Priyanshuvaish/digit_client/models"
 )
 
 
@@ -222,7 +221,7 @@ func (b *ActionSearchCriteriaBuilder) Build() *ActionSearchCriteria {
 
 // ActionRequest represents an action API request
 type ActionRequest struct {
-	RequestInfo   *models.RequestInfo
+	RequestInfo   *RequestInfo
 	RoleCodes     []string
 	FeatureIDs    []int
 	TenantID      string
@@ -249,7 +248,7 @@ func NewActionRequestBuilder() *ActionRequestBuilder {
 	}
 }
 
-func (b *ActionRequestBuilder) WithRequestInfo(info *models.RequestInfo) *ActionRequestBuilder {
+func (b *ActionRequestBuilder) WithRequestInfo(info *RequestInfo) *ActionRequestBuilder {
 	b.request.RequestInfo = info
 	return b
 }
@@ -307,9 +306,7 @@ func (b *ActionRequestBuilder) Build() *ActionRequest {
 func (r *ActionRequest) ToMap() map[string]interface{} {
 	result := make(map[string]interface{})
 	
-	if r.RequestInfo != nil {
-		result["RequestInfo"] = r.RequestInfo.ToMap()
-	}
+	result["RequestInfo"] = r.RequestInfo.ToMap()
 	if len(r.RoleCodes) > 0 {
 		result["roleCodes"] = r.RoleCodes
 	}

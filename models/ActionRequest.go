@@ -5,7 +5,6 @@ import (
 	"time"
 )
 
-
 // Action represents a system action
 type Action struct {
 	ID               int
@@ -28,131 +27,131 @@ type Action struct {
 	RightIcon        string
 }
 
-// ActionBuilder constructs Action instances
-type ActionBuilder struct {
-	action *Action
-}
+// // ActionBuilder constructs Action instances
+// type ActionBuilder struct {
+// 	action *Action
+// }
 
 // NewActionBuilder creates a new ActionBuilder
-func NewActionBuilder() *ActionBuilder {
-	return &ActionBuilder{action: &Action{}}
+func ActionBuilder() *Action {
+	return &Action{}
 }
 
 // Builder methods
-func (b *ActionBuilder) WithID(id int) *ActionBuilder {
-	b.action.ID = id
+func (b *Action) WithID(id int) *Action {
+	b.ID = id
 	return b
 }
 
-func (b *ActionBuilder) WithName(name string) *ActionBuilder {
-	b.action.Name = name
+func (b *Action) WithName(name string) *Action {
+	b.Name = name
 	return b
 }
 
-func (b *ActionBuilder) WithURL(url string) *ActionBuilder {
-	b.action.URL = url
+func (b *Action) WithURL(url string) *Action {
+	b.URL = url
 	return b
 }
 
-func (b *ActionBuilder) WithDisplayName(displayName string) *ActionBuilder {
-	b.action.DisplayName = displayName
+func (b *Action) WithDisplayName(displayName string) *Action {
+	b.DisplayName = displayName
 	return b
 }
 
-func (b *ActionBuilder) WithOrderNumber(orderNumber int) *ActionBuilder {
-	b.action.OrderNumber = orderNumber
+func (b *Action) WithOrderNumber(orderNumber int) *Action {
+	b.OrderNumber = orderNumber
 	return b
 }
 
-func (b *ActionBuilder) WithQueryParams(queryParams string) *ActionBuilder {
-	b.action.QueryParams = queryParams
+func (b *Action) WithQueryParams(queryParams string) *Action {
+	b.QueryParams = queryParams
 	return b
 }
 
-func (b *ActionBuilder) WithParentModule(parentModule string) *ActionBuilder {
-	b.action.ParentModule = parentModule
+func (b *Action) WithParentModule(parentModule string) *Action {
+	b.ParentModule = parentModule
 	return b
 }
 
-func (b *ActionBuilder) WithEnabled(enabled bool) *ActionBuilder {
-	b.action.Enabled = enabled
+func (b *Action) WithEnabled(enabled bool) *Action {
+	b.Enabled = enabled
 	return b
 }
 
-func (b *ActionBuilder) WithServiceCode(serviceCode string) *ActionBuilder {
-	b.action.ServiceCode = serviceCode
+func (b *Action) WithServiceCode(serviceCode string) *Action {
+	b.ServiceCode = serviceCode
 	return b
 }
 
-func (b *ActionBuilder) WithTenantID(tenantID string) *ActionBuilder {
-	b.action.TenantID = tenantID
+func (b *Action) WithTenantID(tenantID string) *Action {
+	b.TenantID = tenantID
 	return b
 }
 
-func (b *ActionBuilder) WithCreatedDate(createdDate time.Time) *ActionBuilder {
-	b.action.CreatedDate = createdDate
+func (b *Action) WithCreatedDate(createdDate time.Time) *Action {
+	b.CreatedDate = createdDate
 	return b
 }
 
-func (b *ActionBuilder) WithCreatedBy(createdBy int) *ActionBuilder {
-	b.action.CreatedBy = createdBy
+func (b *Action) WithCreatedBy(createdBy int) *Action {
+	b.CreatedBy = createdBy
 	return b
 }
 
-func (b *ActionBuilder) WithLastModifiedDate(lastModifiedDate time.Time) *ActionBuilder {
-	b.action.LastModifiedDate = lastModifiedDate
+func (b *Action) WithLastModifiedDate(lastModifiedDate time.Time) *Action {
+	b.LastModifiedDate = lastModifiedDate
 	return b
 }
 
-func (b *ActionBuilder) WithLastModifiedBy(lastModifiedBy int) *ActionBuilder {
-	b.action.LastModifiedBy = lastModifiedBy
+func (b *Action) WithLastModifiedBy(lastModifiedBy int) *Action {
+	b.LastModifiedBy = lastModifiedBy
 	return b
 }
 
-func (b *ActionBuilder) WithPath(path string) *ActionBuilder {
-	b.action.Path = path
+func (b *Action) WithPath(path string) *Action {
+	b.Path = path
 	return b
 }
 
-func (b *ActionBuilder) WithNavigationURL(navigationURL string) *ActionBuilder {
-	b.action.NavigationURL = navigationURL
+func (b *Action) WithNavigationURL(navigationURL string) *Action {
+	b.NavigationURL = navigationURL
 	return b
 }
 
-func (b *ActionBuilder) WithLeftIcon(leftIcon string) *ActionBuilder {
-	b.action.LeftIcon = leftIcon
+func (b *Action) WithLeftIcon(leftIcon string) *Action {
+	b.LeftIcon = leftIcon
 	return b
 }
 
-func (b *ActionBuilder) WithRightIcon(rightIcon string) *ActionBuilder {
-	b.action.RightIcon = rightIcon
+func (b *Action) WithRightIcon(rightIcon string) *Action {
+	b.RightIcon = rightIcon
 	return b
 }
 
 // Build validates and returns the Action
-func (b *ActionBuilder) Build() (*Action, error) {
-	if len(b.action.Name) > 100 {
+func (b *Action) Build() (*Action, error) {
+	if len(b.Name) > 100 {
 		return nil, errors.New("name exceeds 100 characters")
 	}
-	if len(b.action.URL) > 100 {
+	if len(b.URL) > 100 {
 		return nil, errors.New("url exceeds 100 characters")
 	}
-	if len(b.action.DisplayName) > 100 {
+	if len(b.DisplayName) > 100 {
 		return nil, errors.New("displayName exceeds 100 characters")
 	}
-	if len(b.action.QueryParams) > 100 {
+	if len(b.QueryParams) > 100 {
 		return nil, errors.New("queryParams exceeds 100 characters")
 	}
-	if len(b.action.ParentModule) > 50 {
+	if len(b.ParentModule) > 50 {
 		return nil, errors.New("parentModule exceeds 50 characters")
 	}
-	if len(b.action.ServiceCode) > 50 {
+	if len(b.ServiceCode) > 50 {
 		return nil, errors.New("serviceCode exceeds 50 characters")
 	}
-	if len(b.action.TenantID) > 50 {
+	if len(b.TenantID) > 50 {
 		return nil, errors.New("tenantID exceeds 50 characters")
 	}
-	return b.action, nil
+	return b, nil
 }
 
 // ToMap converts Action to a map
@@ -186,37 +185,27 @@ type ActionSearchCriteria struct {
 	TenantID   string
 }
 
-// ActionSearchCriteriaBuilder constructs search criteria
-type ActionSearchCriteriaBuilder struct {
-	criteria *ActionSearchCriteria
+func ActionSearchCriteriaBuilder() *ActionSearchCriteria {
+	return &ActionSearchCriteria{RoleCodes: []string{}, FeatureIDs: []int{}}
 }
 
-func NewActionSearchCriteriaBuilder() *ActionSearchCriteriaBuilder {
-	return &ActionSearchCriteriaBuilder{
-		criteria: &ActionSearchCriteria{
-			RoleCodes:  []string{},
-			FeatureIDs: []int{},
-		},
-	}
-}
-
-func (b *ActionSearchCriteriaBuilder) WithRoleCodes(roleCodes []string) *ActionSearchCriteriaBuilder {
-	b.criteria.RoleCodes = roleCodes
+func (b *ActionSearchCriteria) WithRoleCodes(roleCodes []string) *ActionSearchCriteria {
+	b.RoleCodes = roleCodes
 	return b
 }
 
-func (b *ActionSearchCriteriaBuilder) WithFeatureIDs(featureIDs []int) *ActionSearchCriteriaBuilder {
-	b.criteria.FeatureIDs = featureIDs
+func (b *ActionSearchCriteria) WithFeatureIDs(featureIDs []int) *ActionSearchCriteria {
+	b.FeatureIDs = featureIDs
 	return b
 }
 
-func (b *ActionSearchCriteriaBuilder) WithTenantID(tenantID string) *ActionSearchCriteriaBuilder {
-	b.criteria.TenantID = tenantID
+func (b *ActionSearchCriteria) WithTenantID(tenantID string) *ActionSearchCriteria {
+	b.TenantID = tenantID
 	return b
 }
 
-func (b *ActionSearchCriteriaBuilder) Build() *ActionSearchCriteria {
-	return b.criteria
+func (b *ActionSearchCriteria) Build() *ActionSearchCriteria {
+	return b
 }
 
 // ActionRequest represents an action API request
@@ -233,79 +222,68 @@ type ActionRequest struct {
 	RightIcon     string
 }
 
-// ActionRequestBuilder constructs ActionRequest instances
-type ActionRequestBuilder struct {
-	request *ActionRequest
+func ActionRequestBuilder() *ActionRequest {
+	return &ActionRequest{RoleCodes: []string{}, FeatureIDs: []int{}, Actions: []*Action{}}
 }
 
-func NewActionRequestBuilder() *ActionRequestBuilder {
-	return &ActionRequestBuilder{
-		request: &ActionRequest{
-			RoleCodes:  []string{},
-			FeatureIDs: []int{},
-			Actions:    []*Action{},
-		},
-	}
-}
-
-func (b *ActionRequestBuilder) WithRequestInfo(info *RequestInfo) *ActionRequestBuilder {
-	b.request.RequestInfo = info
+func (b *ActionRequest) WithRequestInfo(info *RequestInfo) *ActionRequest {
+	b.RequestInfo = info
 	return b
 }
 
-func (b *ActionRequestBuilder) WithRoleCodes(roleCodes []string) *ActionRequestBuilder {
-	b.request.RoleCodes = roleCodes
+func (b *ActionRequest) WithRoleCodes(roleCodes []string) *ActionRequest {
+	b.RoleCodes = roleCodes
 	return b
 }
 
-func (b *ActionRequestBuilder) WithFeatureIDs(featureIDs []int) *ActionRequestBuilder {
-	b.request.FeatureIDs = featureIDs
+func (b *ActionRequest) WithFeatureIDs(featureIDs []int) *ActionRequest {
+	b.FeatureIDs = featureIDs
 	return b
 }
 
-func (b *ActionRequestBuilder) WithTenantID(tenantID string) *ActionRequestBuilder {
-	b.request.TenantID = tenantID
+func (b *ActionRequest) WithTenantID(tenantID string) *ActionRequest {
+	b.TenantID = tenantID
 	return b
 }
 
-func (b *ActionRequestBuilder) WithEnabled(enabled bool) *ActionRequestBuilder {
-	b.request.Enabled = &enabled
+func (b *ActionRequest) WithEnabled(enabled bool) *ActionRequest {
+	b.Enabled = &enabled
 	return b
 }
 
-func (b *ActionRequestBuilder) WithActions(actions []*Action) *ActionRequestBuilder {
-	b.request.Actions = actions
+func (b *ActionRequest) WithActions(actions []*Action) *ActionRequest {
+	b.Actions = actions
 	return b
 }
 
-func (b *ActionRequestBuilder) WithActionMaster(master string) *ActionRequestBuilder {
-	b.request.ActionMaster = master
+func (b *ActionRequest) WithActionMaster(master string) *ActionRequest {
+	b.ActionMaster = master
 	return b
 }
 
-func (b *ActionRequestBuilder) WithNavigationURL(url string) *ActionRequestBuilder {
-	b.request.NavigationURL = url
+func (b *ActionRequest) WithNavigationURL(url string) *ActionRequest {
+	b.NavigationURL = url
 	return b
 }
 
-func (b *ActionRequestBuilder) WithLeftIcon(icon string) *ActionRequestBuilder {
-	b.request.LeftIcon = icon
+func (b *ActionRequest) WithLeftIcon(icon string) *ActionRequest {
+	b.LeftIcon = icon
 	return b
 }
 
-func (b *ActionRequestBuilder) WithRightIcon(icon string) *ActionRequestBuilder {
-	b.request.RightIcon = icon
+func (b *ActionRequest) WithRightIcon(icon string) *ActionRequest {
+	b.RightIcon = icon
 	return b
 }
 
-func (b *ActionRequestBuilder) Build() *ActionRequest {
-	return b.request
+func (b *ActionRequest) Build() (*ActionRequest, error) {
+	return b, nil
 }
 
 // ToMap converts ActionRequest to a map
 func (r *ActionRequest) ToMap() map[string]interface{} {
 	result := make(map[string]interface{})
-	
+
 	result["RequestInfo"] = r.RequestInfo.ToMap()
 	if len(r.RoleCodes) > 0 {
 		result["roleCodes"] = r.RoleCodes
@@ -338,6 +316,6 @@ func (r *ActionRequest) ToMap() map[string]interface{} {
 	if r.RightIcon != "" {
 		result["rightIcon"] = r.RightIcon
 	}
-	
+
 	return result
 }

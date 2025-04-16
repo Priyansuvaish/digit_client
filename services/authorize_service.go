@@ -2,6 +2,7 @@ package services
 
 import (
 	"fmt"
+
 	"github.com/Priyansuvaish/digit_client/client"
 	"github.com/Priyansuvaish/digit_client/models"
 )
@@ -22,21 +23,21 @@ func NewAuthorizeService(apiClient *client.APIClient) *AuthorizeService {
 
 // AuthorizeAction authorizes an action based on roles and tenant permissions
 func (s *AuthorizeService) AuthorizeAction(authorizationRequest *models.AuthorizationRequest, requestInfo *models.RequestInfo) (interface{}, error) {
-	
+
 	if requestInfo == nil {
 		// Get the singleton instance of RequestConfig
 		requestConfig := (&models.RequestConfig{}).GetInstance()
 		// Call GetRequestInfo on the instance
 		requestInfo = requestConfig.GetRequestInfo("", nil)
 	}
-	fmt.Printf("requestinfo %+v\n",requestInfo.ToMap())
+	fmt.Printf("requestinfo %+v\n", requestInfo.ToMap())
 	payload := map[string]interface{}{
-		"RequestInfo":         requestInfo.ToMap(),
+		"RequestInfo":          requestInfo.ToMap(),
 		"AuthorizationRequest": authorizationRequest.ToMap(),
 	}
 
 	endpoint := s.baseURL + "/actions/_authorize"
-	return s.apiClient.Post(endpoint, payload, nil, true)
+	return s.apiClient.Post(endpoint, payload, nil, nil, nil, nil, true)
 }
 
 // GetMDMSAction gets MDMS action details
@@ -50,7 +51,6 @@ func (s *AuthorizeService) GetMDMSAction(actionRequest *models.ActionRequest, re
 	}
 	actionRequest.RequestInfo = requestInfo
 	payload := actionRequest.ToMap()
-
 	endpoint := s.baseURL + "/actions/mdms/_get"
-	return s.apiClient.Post(endpoint, payload, nil, true)
-} 
+	return s.apiClient.Post(endpoint, payload, nil, nil, nil, nil, true)
+}

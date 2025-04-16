@@ -2,6 +2,7 @@ package services
 
 import (
 	"fmt"
+
 	"github.com/Priyansuvaish/digit_client/client"
 	"github.com/Priyansuvaish/digit_client/models"
 )
@@ -28,7 +29,7 @@ func (s *UserService) CreateCitizen(citizenUser *models.CitizenUser, requestInfo
 	}
 
 	endpoint := s.baseURL + "/citizen/_create"
-	return s.apiClient.Post(endpoint, payload, nil, true)
+	return s.apiClient.Post(endpoint, payload, nil, nil, nil, nil, true)
 }
 
 // GetUserDetails retrieves user details using access token
@@ -50,7 +51,7 @@ func (s *UserService) GetUserDetails(tenantID string, requestInfo *models.Reques
 	}
 
 	endpoint := s.baseURL + "/_details"
-	return s.apiClient.Post(endpoint, payload, params, true)
+	return s.apiClient.Post(endpoint, payload, params, nil, nil, nil, true)
 }
 
 // UpdateProfile updates a user's profile
@@ -61,7 +62,7 @@ func (s *UserService) UpdateProfile(userProfile *models.CitizenUser, requestInfo
 	}
 
 	endpoint := s.baseURL + "/profile/_update"
-	return s.apiClient.Post(endpoint, payload, nil, true)
+	return s.apiClient.Post(endpoint, payload, nil, nil, nil, nil, true)
 }
 
 // SearchUsers searches for users based on criteria
@@ -76,7 +77,7 @@ func (s *UserService) SearchUsers(searchCriteria *models.UserSearchModel, reques
 	}
 
 	endpoint := s.baseURL + "/_search"
-	return s.apiClient.Post(endpoint, payload, nil, true)
+	return s.apiClient.Post(endpoint, payload, nil, nil, nil, nil, true)
 }
 
 // CreateUserNoValidate creates a user without validation
@@ -87,7 +88,7 @@ func (s *UserService) CreateUserNoValidate(citizenUser *models.CitizenUser, requ
 	}
 
 	endpoint := s.baseURL + "/users/_createnovalidate"
-	return s.apiClient.Post(endpoint, payload, nil, true)
+	return s.apiClient.Post(endpoint, payload, nil, nil, nil, nil, true)
 }
 
 // UpdateUserNoValidate updates a user without validation
@@ -98,5 +99,5 @@ func (s *UserService) UpdateUserNoValidate(userProfile *models.CitizenUser, requ
 	}
 
 	endpoint := s.baseURL + "/users/_updatenovalidate"
-	return s.apiClient.Post(endpoint, payload, nil, true)
-} 
+	return s.apiClient.Post(endpoint, payload, nil, nil, nil, nil, true)
+}

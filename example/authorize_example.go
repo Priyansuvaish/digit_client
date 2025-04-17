@@ -5,7 +5,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/Priyansuvaish/digit_client/client"
+	// "github.com/Priyansuvaish/digit_client/client"
+	"github.com/Priyansuvaish/digit_client/config"
 	"github.com/Priyansuvaish/digit_client/models"
 	"github.com/Priyansuvaish/digit_client/services"
 	"github.com/google/uuid"
@@ -13,8 +14,11 @@ import (
 
 func main() {
 	// Create a new API client with DIGIT sandbox URL
-	apiClient := client.NewAPIClient("https://sandbox.digit.org", "")
-
+	// apiClient := client.NewAPIClient("https://sandbox.digit.org", "")
+	config.GetGlobalConfig().Initialize(
+		"https://sandbox.digit.org",
+		"your-auth-token",
+	)
 	// Initialize RequestConfig properly
 	requestConfig := (&models.RequestConfig{}).GetInstance()
 	requestConfig.Initialize(
@@ -32,7 +36,7 @@ func main() {
 	)
 
 	// Create authorize service
-	authorizeService := services.NewAuthorizeService(apiClient)
+	authorizeService := services.NewAuthorizeService(nil)
 
 	// Build Role first
 	role := models.RoleBuilder().WithCode("ADMIN").Build()

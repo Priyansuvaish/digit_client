@@ -15,6 +15,9 @@ type AuthorizeService struct {
 
 // NewAuthorizeService creates a new authorize service instance
 func NewAuthorizeService(apiClient *client.APIClient) *AuthorizeService {
+	if apiClient == nil {
+		apiClient = client.DefaultAPIClient()
+	}
 	return &AuthorizeService{
 		apiClient: apiClient,
 		baseURL:   "access/v1",

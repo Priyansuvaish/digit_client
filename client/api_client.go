@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/Priyansuvaish/digit_client/config"
 )
 
 // APIClient represents the main client for making API requests
@@ -22,6 +24,22 @@ func NewAPIClient(baseURL, authToken string) *APIClient {
 	return &APIClient{
 		baseURL:    baseURL,
 		authToken:  authToken,
+		httpClient: &http.Client{},
+	}
+}
+func DefaultAPIClient() *APIClient {
+	// Get singleton instance
+	gc := config.GetGlobalConfig()
+	info := gc.GetInfo()
+
+	// Add safety checks
+	if info == nil {
+		panic("Configuration not initialized. Call config.GetGlobalConfig().Initialize() first")
+	}
+
+	return &APIClient{
+		baseURL:    info.APIEndpoint,
+		authToken:  info.AuthToken,
 		httpClient: &http.Client{},
 	}
 }

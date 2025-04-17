@@ -14,6 +14,9 @@ type AuthenticateService struct {
 
 // NewAuthenticateService creates a new authenticate service instance
 func NewAuthenticateService(apiClient *client.APIClient) *AuthenticateService {
+	if apiClient == nil {
+		apiClient = client.DefaultAPIClient()
+	}
 	return &AuthenticateService{
 		apiClient: apiClient,
 		baseURL:   "user",

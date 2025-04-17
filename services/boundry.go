@@ -15,6 +15,9 @@ type BoundaryService struct {
 
 // NewBoundaryService creates a new BoundaryService instance
 func NewBoundaryService(apiClient *client.APIClient) *BoundaryService {
+	if apiClient == nil {
+		apiClient = client.DefaultAPIClient()
+	}
 	return &BoundaryService{
 		apiClient: apiClient,
 		baseURL:   "boundarys/_search",

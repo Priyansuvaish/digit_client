@@ -14,13 +14,13 @@ type EncReqObject struct {
 
 func (e *EncReqObject) Validate() error {
 	if e.TenantID == "" {
-		return fmt.Errorf("Tenant ID is required")
+		return fmt.Errorf("tenant ID is required")
 	}
 	if e.Type == "" {
-		return fmt.Errorf("Type is required")
+		return fmt.Errorf("type is required")
 	}
 	if e.Value == "" {
-		return fmt.Errorf("Value is required")
+		return fmt.Errorf("value is required")
 	}
 	return nil
 }
@@ -40,10 +40,10 @@ type SignRequest struct {
 
 func (s *SignRequest) Validate() error {
 	if s.TenantID == "" {
-		return fmt.Errorf("Tenant ID is required")
+		return fmt.Errorf("tenant ID is required")
 	}
 	if s.Value == "" {
-		return fmt.Errorf("Value is required")
+		return fmt.Errorf("value is required")
 	}
 	return nil
 }
@@ -96,10 +96,10 @@ type VerifyRequest struct {
 
 func (v *VerifyRequest) Validate() error {
 	if v.Value == "" {
-		return fmt.Errorf("Value is required")
+		return fmt.Errorf("value is required")
 	}
 	if v.Signature == nil {
-		return fmt.Errorf("Signature is required")
+		return fmt.Errorf("signature is required")
 	}
 	return nil
 }
@@ -117,7 +117,7 @@ type RotateKeyRequest struct {
 
 func (r *RotateKeyRequest) Validate() error {
 	if r.TenantID == "" {
-		return fmt.Errorf("Tenant ID is required")
+		return fmt.Errorf("tenant ID is required")
 	}
 	return nil
 }

@@ -1,8 +1,6 @@
 package services
 
 import (
-	"fmt"
-
 	"github.com/Priyansuvaish/digit_client/client"
 	"github.com/Priyansuvaish/digit_client/models"
 )
@@ -33,7 +31,7 @@ func (s *AuthorizeService) AuthorizeAction(authorizationRequest *models.Authoriz
 		// Call GetRequestInfo on the instance
 		requestInfo = requestConfig.GetRequestInfo("", nil)
 	}
-	fmt.Printf("requestinfo %+v\n", requestInfo.ToMap())
+	// fmt.Printf("requestinfo %+v\n", requestInfo.ToMap())
 	payload := map[string]interface{}{
 		"RequestInfo":          requestInfo.ToMap(),
 		"AuthorizationRequest": authorizationRequest.ToMap(),

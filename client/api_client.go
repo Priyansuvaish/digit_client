@@ -45,14 +45,18 @@ func DefaultAPIClient() *APIClient {
 }
 
 // Get makes a GET request to the specified endpoint
-func (c *APIClient) Get(endpoint string, params map[string]string, requireAuth bool) (interface{}, error) {
-	// Create URL with query parameters
+func (c *APIClient) Get(endpoint string, params map[string]string, stream bool, requireAuth ...bool) (interface{}, error) {
+	// Determine if authentication is required (default: true)
+	auth := true
+	if len(requireAuth) > 0 {
+		auth = requireAuth[0]
+	}
+
+	// Build URL with query parameters
 	u, err := url.Parse(c.baseURL + "/" + endpoint)
 	if err != nil {
 		return nil, err
 	}
-
-	// Add query parameters
 	q := u.Query()
 	for key, value := range params {
 		q.Add(key, value)
@@ -66,8 +70,13 @@ func (c *APIClient) Get(endpoint string, params map[string]string, requireAuth b
 	}
 
 	// Add authorization header if required
-	if requireAuth && c.authToken != "" {
+	if auth && c.authToken != "" {
 		req.Header.Add("Authorization", "Bearer "+c.authToken)
+	}
+
+	// Do not follow redirects automatically
+	c.httpClient.CheckRedirect = func(req *http.Request, via []*http.Request) error {
+		return http.ErrUseLastResponse
 	}
 
 	// Make request
@@ -77,8 +86,17 @@ func (c *APIClient) Get(endpoint string, params map[string]string, requireAuth b
 	}
 	defer resp.Body.Close()
 
-	// Handle redirects
-	if resp.StatusCode >= 300 && resp.StatusCode < 400 {
+	// If streaming, return raw bytes
+	if stream {
+		data, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return nil, err
+		}
+		return data, nil
+	}
+
+	// Handle redirects (3xx)
+	if resp.StatusCode == 301 || resp.StatusCode == 302 || resp.StatusCode == 303 || resp.StatusCode == 307 || resp.StatusCode == 308 {
 		location := resp.Header.Get("Location")
 		return location, nil
 	}
@@ -89,13 +107,11 @@ func (c *APIClient) Get(endpoint string, params map[string]string, requireAuth b
 		return nil, err
 	}
 
-	// Try to parse as JSON
+	// Try to parse as JSON, fallback to string
 	var result interface{}
 	if err := json.Unmarshal(body, &result); err != nil {
-		// If not JSON, return as string
 		return string(body), nil
 	}
-
 	return result, nil
 }
 

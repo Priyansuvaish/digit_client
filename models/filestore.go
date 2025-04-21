@@ -15,7 +15,7 @@ type FileUploadRequest struct {
 }
 
 func (f *FileUploadRequest) Validate() error {
-	if f.Files == nil || len(f.Files) == 0 {
+	if len(f.Files) == 0 {
 		return fmt.Errorf("files cannot be empty")
 	}
 	if f.TenantID == "" {
@@ -76,7 +76,7 @@ type FileRetrieveByUrlRequest struct {
 }
 
 func (f *FileRetrieveByUrlRequest) Validate() error {
-	if f.FileStoreIds == nil || len(f.FileStoreIds) == 0 {
+	if len(f.FileStoreIds) == 0 {
 		return fmt.Errorf("file_store_ids cannot be empty")
 	}
 	if f.TenantID == "" {

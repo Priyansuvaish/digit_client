@@ -69,7 +69,7 @@ func (s *AuthenticateService) Logout(requestInfo *models.RequestInfo) (interface
 		requestInfo = requestConfig.GetRequestInfo("", nil)
 	}
 	payload := requestInfo.ToMap()
-	param := map[string]string{
+	param := map[string]interface{}{
 		"access_token": requestInfo.AuthToken,
 	}
 	endpoint := s.baseURL + "/_logout"

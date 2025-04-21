@@ -1,8 +1,6 @@
 package services
 
 import (
-	"io"
-
 	"github.com/Priyansuvaish/digit_client/client"
 	"github.com/Priyansuvaish/digit_client/models"
 )
@@ -33,21 +31,21 @@ func (s *FilestoreService) UploadFile(file *models.FileUploadRequest) (interface
 		}
 	}
 	// Add files to the request
-	filesMap := make(map[string]string)
-	if file.Files != nil && len(file.Files) > 0 {
-		for _, f := range file.Files {
-			fileContent, err := f.Open()
-			if err != nil {
-				return nil, err
-			}
-			defer fileContent.Close()
-			contentBytes, err := io.ReadAll(fileContent)
-			if err != nil {
-				return nil, err
-			}
-			filesMap[f.Filename] = string(contentBytes) // Convert file content to string
-		}
-	}
+	// filesMap := make(map[string]string)
+	// if file.Files != nil && len(file.Files) > 0 {
+	// 	for _, f := range file.Files {
+	// 		fileContent, err := f.Open()
+	// 		if err != nil {
+	// 			return nil, err
+	// 		}
+	// 		defer fileContent.Close()
+	// 		contentBytes, err := io.ReadAll(fileContent)
+	// 		if err != nil {
+	// 			return nil, err
+	// 		}
+	// 		filesMap[f.Filename] = string(contentBytes) // Convert file content to string
+	// 	}
+	// }
 	endpoint := s.baseURL
 	// Make the API call to upload the file
 	return s.apiClient.Post(
@@ -55,7 +53,7 @@ func (s *FilestoreService) UploadFile(file *models.FileUploadRequest) (interface
 		nil,
 		data,
 		nil,
-		filesMap, // Pass filesMap as map[string]string
+		nil, // Pass filesMap as map[string]string
 		nil,
 		true,
 	)

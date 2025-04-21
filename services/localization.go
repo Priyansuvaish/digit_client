@@ -44,14 +44,7 @@ func (s *LocalizationService) Search_messages(body *models.LocaleRequest) (inter
 	// Define the endpoint URL
 	endpoint := s.baseURL + "/_search"
 	// Make the POST request
-	// Convert map[string]interface{} to map[string]string
-	convertedMap := make(map[string]string)
-	for key, value := range body.ToMap() {
-		if strValue, ok := value.(string); ok {
-			convertedMap[key] = strValue
-		}
-	}
-	return s.apiClient.Post(endpoint, nil, nil, nil, convertedMap, nil, true)
+	return s.apiClient.Post(endpoint, nil, nil, nil, body.ToMap(), nil, true)
 }
 
 // Update existing localized messages

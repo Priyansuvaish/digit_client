@@ -3,6 +3,7 @@ package client
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"mime/multipart"
 	"net/http"
@@ -121,7 +122,7 @@ func (c *APIClient) Post(
 	jsonData interface{},
 	formData map[string]string,
 	additionalHeaders map[string]string,
-	params map[string]string,
+	params map[string]interface{},
 	files map[string]io.Reader,
 	requireAuth bool,
 ) (interface{}, error) {
@@ -132,7 +133,7 @@ func (c *APIClient) Post(
 	}
 	q := u.Query()
 	for key, value := range params {
-		q.Add(key, value)
+		q.Add(key, fmt.Sprintf("%v", value))
 	}
 	u.RawQuery = q.Encode()
 

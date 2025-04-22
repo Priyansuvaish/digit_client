@@ -67,9 +67,8 @@ func (e *EgovOtpService) Search_otp(otp *models.Otp, requestinfo *models.Request
 }
 
 type UserOtpService struct {
-	apiClient     *client.APIClient
-	user_otp_base string
-	otp_base      string
+	apiClient *client.APIClient
+	otp_base  string
 }
 
 func NewUserOtpService(apiClient *client.APIClient) *EgovOtpService {

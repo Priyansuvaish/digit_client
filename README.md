@@ -11,7 +11,15 @@ go get github.com/Priyansuvaish/digit_client
 ## Usage
 
 ```go
-import "github.com/Priyansuvaish/digit_client/config"
+import ("fmt"
+	"log"
+	"time"
+
+	// "github.com/Priyansuvaish/digit_client/client"
+	"github.com/Priyansuvaish/digit_client/config"
+	"github.com/Priyansuvaish/digit_client/models"
+	"github.com/Priyansuvaish/digit_client/services"
+	"github.com/google/uuid")
 
 func main() {
     // configre the url and auth token globally

@@ -1,7 +1,7 @@
-package main
+package digit_init
 
 import "fmt"
 
-func main() {
+func Test() {
 	fmt.Println("hello, world!")
 }

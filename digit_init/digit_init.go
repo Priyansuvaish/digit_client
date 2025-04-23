@@ -166,7 +166,6 @@ func handleRegistration() (string, error) {
 		return "", fmt.Errorf("OTP validation failed: %v", err)
 	}
 	tok := token["access_token"].(string)
-	fmt.Println("Access Token:", token)
 	return tok, nil
 }
 
@@ -180,7 +179,7 @@ func handleLogin() (string, error) {
 		return "", fmt.Errorf("OTP validation failed: %v", err)
 	}
 	tok := token["access_token"].(string)
-	fmt.Println("Access Token:", token)
+	fmt.Println("Access Token:", tok)
 	return tok, nil
 }
 
@@ -190,9 +189,20 @@ func Authenticate() (string, error) {
 	for {
 		choice := readInput("Do you want to (1) Register or (2) Login? ")
 		if choice == "1" {
-			return handleRegistration()
+			token, err := handleRegistration()
+			if err != nil {
+				return "", err
+			}
+			fmt.Printf("Access token: %s\n", token)
+			return token, nil
 		} else if choice == "2" {
-			return handleLogin()
+			token, err := handleLogin()
+			if err != nil {
+				return "", err
+			}
+			fmt.Printf("Access token: %s\n", token)
+
+			return token, nil
 		}
 		fmt.Println("Invalid choice. Try again.")
 

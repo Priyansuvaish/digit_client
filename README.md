@@ -16,16 +16,19 @@ import ("fmt"
 	"time"
 
 	// "github.com/Priyansuvaish/digit_client/client"
+	"github.com/Priyansuvaish/digit_client/digit_init"
 	"github.com/Priyansuvaish/digit_client/config"
 	"github.com/Priyansuvaish/digit_client/models"
 	"github.com/Priyansuvaish/digit_client/services"
 	"github.com/google/uuid")
 
 func main() {
+	//for the auth token 
+	token ,err:=digit_init.Authenticate()
     // configre the url and auth token globally
     config.GetGlobalConfig().Initialize(
 		"https://sandbox.digit.org",
-		"your-auth-token",
+		token,
 	)
 
     //if you want to create a new API client with DIGIT sandbox URL and you have to pass in the service instanciation
@@ -37,7 +40,7 @@ func main() {
 	requestConfig.Initialize(
 		"digit",                  // apiID
 		"1.0",                    // version
-		"your-auth-token-here",   // authToken
+		token,   // authToken
 		map[string]interface{}{}, // userInfo
 		"device123",              // did
 		"key123",                 // key

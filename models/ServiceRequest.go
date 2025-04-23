@@ -63,9 +63,9 @@ type Service struct {
 	ServiceDefID      string                 `json:"serviceDefId"`
 	AccountID         string                 `json:"accountId"`
 	Attributes        []AttributeValue       `json:"attributes"`
-	ID                *string                `json:"id,omitempty"`
-	ReferenceID       *string                `json:"referenceId,omitempty"`
-	ClientID          *string                `json:"clientId,omitempty"`
+	ID                string                 `json:"id,omitempty"`
+	ReferenceID       string                 `json:"referenceId,omitempty"`
+	ClientID          string                 `json:"clientId,omitempty"`
 	AuditDetails      *AuditDetails          `json:"auditDetails,omitempty"`
 	AdditionalDetails map[string]interface{} `json:"additionalDetails,omitempty"`
 }
@@ -77,13 +77,13 @@ func (s *Service) Validate() error {
 	if len(s.ServiceDefID) < 2 || len(s.ServiceDefID) > 64 {
 		return errors.New("service_def_id must be between 2-64 characters")
 	}
-	if s.ReferenceID != nil {
-		l := len(*s.ReferenceID)
+	if s.ReferenceID != "" {
+		l := len(s.ReferenceID)
 		if l < 2 || l > 64 {
 			return errors.New("reference_id must be between 2-64 characters")
 		}
 	}
-	if s.ClientID != nil && len(*s.ClientID) > 64 {
+	if s.ClientID != "" && len(s.ClientID) > 64 {
 		return errors.New("client_id must be at most 64 characters")
 	}
 	if len(s.Attributes) == 0 {
@@ -185,7 +185,7 @@ type AttributeDefinition struct {
 func (a *AttributeDefinition) Validate() error {
 	for _, field := range []string{a.Id, a.Reference_id, a.Tenant_id, a.Regex} {
 		if len(field) < 2 || len(field) > 64 {
-			return fmt.Errorf("Field must be between 2-64 characters")
+			return fmt.Errorf("field must be between 2-64 characters")
 		}
 	}
 	if len(a.Code) < 2 || len(a.Code) > 64 {
@@ -230,7 +230,7 @@ type ServiceDefinition struct {
 func (s *ServiceDefinition) Validate() error {
 	for _, field := range []string{s.Id, s.TenantID, s.Code, s.ClientID} {
 		if len(field) < 2 || len(field) > 64 {
-			return fmt.Errorf("Field must be between 2-64 characters")
+			return fmt.Errorf("field must be between 2-64 characters")
 		}
 	}
 	if s.AttributeS == nil {
@@ -330,4 +330,52 @@ func (a *AttributeValue) WithAuditDetail(code *AuditDetails) *AttributeValue {
 func (a *AttributeValue) WithAddtionalDetails(code map[string]interface{}) *AttributeValue {
 	a.AdditionalDetails = code
 	return a
+}
+
+func (a *AttributeValue) Build() (*AttributeValue, error) {
+	err := a.Validate()
+	if err != nil {
+		return nil, err
+	}
+	return a, nil
+}
+
+func (s *Service) WithTenantID(code string) *Service {
+	s.TenantID = code
+	return s
+}
+func (s *Service) WithServiceDefId(code string) *Service {
+	s.ServiceDefID = code
+	return s
+}
+func (s *Service) WithAccountID(code string) *Service {
+	s.AccountID = code
+	return s
+}
+func (s *Service) WithReferenceID(code string) *Service {
+	s.ReferenceID = code
+	return s
+}
+func (s *Service) WithAttributes(code []AttributeValue) *Service {
+	s.Attributes = code
+	return s
+}
+func (s *Service) WithClientID(code string) *Service {
+	s.ClientID = code
+	return s
+}
+func (s *Service) WithAuditDetail(code *AuditDetails) *Service {
+	s.AuditDetails = code
+	return s
+}
+func (s *Service) WithAdditionalDeatils(code map[string]interface{}) *Service {
+	s.AdditionalDetails = code
+	return s
+}
+func (s *Service) Build(code string) (*Service, error) {
+	err := s.Validate()
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
 }

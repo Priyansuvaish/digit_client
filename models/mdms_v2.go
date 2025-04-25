@@ -289,16 +289,8 @@ func (m *Mdms) WithAuditDetails(auditDetails *AuditDetails) *Mdms {
 }
 
 func (m *Mdms) Build() *Mdms {
-	mdms := &Mdms{
-		TenantID:         m.TenantID,
-		SchemeCode:       m.SchemeCode,
-		Data:             m.Data,
-		ID:               m.ID,
-		UniqueIdentifier: m.UniqueIdentifier,
-		IsActive:         m.IsActive,
-		AuditDetails:     m.AuditDetails,
-	}
-	if err := mdms.Validate(); err != nil {
+	err := m.Validate()
+	if err != nil {
 		fmt.Printf("Validation error: %v\n", err)
 		return nil
 	}

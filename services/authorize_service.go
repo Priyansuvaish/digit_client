@@ -36,7 +36,6 @@ func (s *AuthorizeService) AuthorizeAction(authorizationRequest *models.Authoriz
 		"RequestInfo":          requestInfo.ToMap(),
 		"AuthorizationRequest": authorizationRequest.ToMap(),
 	}
-
 	endpoint := s.baseURL + "/actions/_authorize"
 	return s.apiClient.Post(endpoint, payload, nil, nil, nil, nil, true)
 }

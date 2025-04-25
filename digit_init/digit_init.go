@@ -179,7 +179,6 @@ func handleLogin() (string, error) {
 		return "", fmt.Errorf("OTP validation failed: %v", err)
 	}
 	tok := token["access_token"].(string)
-	// fmt.Println("Access Token:", tok)
 	return tok, nil
 }
 

@@ -9,8 +9,8 @@ import (
 type OrderEnum string
 
 const (
-	ASC  OrderEnum = "asc"
-	DESC OrderEnum = "desc"
+	ASC  OrderEnum = "ASC"
+	DESC OrderEnum = "DESC"
 )
 
 type DataTypeEnum string
@@ -296,7 +296,9 @@ func ServiceCriteriaBuilder() *ServiceCriteria {
 	return &ServiceCriteria{}
 }
 func PaginationBuilder() *Pagination {
-	return &Pagination{}
+	return &Pagination{
+		Order: ASC,
+	}
 }
 func AttributeDefinitionBuilder() *AttributeDefinition {
 	return &AttributeDefinition{}
@@ -373,6 +375,184 @@ func (s *Service) WithAdditionalDeatils(code map[string]interface{}) *Service {
 	return s
 }
 func (s *Service) Build(code string) (*Service, error) {
+	err := s.Validate()
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
+}
+func (s *ServiceCriteria) WithTenantID(code string) *ServiceCriteria {
+	s.TenantID = code
+	return s
+}
+func (s *ServiceCriteria) WithIDs(code []string) *ServiceCriteria {
+	s.Ids = code
+	return s
+}
+func (s *ServiceCriteria) Withservice_def_ids(code []string) *ServiceCriteria {
+	s.Service_def_ids = code
+	return s
+}
+func (s *ServiceCriteria) Withclient_id(code string) *ServiceCriteria {
+	s.Client_id = code
+	return s
+}
+func (s *ServiceCriteria) Withreference_ids(code []string) *ServiceCriteria {
+	s.ReferenceID = code
+	return s
+}
+func (s *ServiceCriteria) Withaccount_id(code string) *ServiceCriteria {
+	s.AccountID = code
+	return s
+}
+func (s *ServiceCriteria) Build() (*ServiceCriteria, error) {
+	err := s.Validate()
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
+}
+
+func (p *Pagination) WithLimit(l int) *Pagination {
+	p.Limit = l
+	return p
+}
+func (p *Pagination) WithOffset(l int) *Pagination {
+	p.Offset = l
+	return p
+}
+func (p *Pagination) WithTotalCount(l int) *Pagination {
+	p.Totalcount = l
+	return p
+}
+func (p *Pagination) WithSort(l string) *Pagination {
+	p.SortBy = l
+	return p
+}
+func (p *Pagination) WithOrder(l OrderEnum) *Pagination {
+	p.Order = l
+	return p
+}
+func (p *Pagination) Build() (*Pagination, error) {
+	err := p.Validate()
+	if err != nil {
+		return nil, err
+	}
+	return p, nil
+}
+func (a *AttributeDefinition) WithCode(code string) *AttributeDefinition {
+	a.Code = code
+	return a
+}
+func (a *AttributeDefinition) WithDataType(code DataTypeEnum) *AttributeDefinition {
+	a.Data_type = code
+	return a
+}
+
+func (a *AttributeDefinition) WithId(code string) *AttributeDefinition {
+	a.Id = code
+	return a
+}
+func (a *AttributeDefinition) Withreference_id(code string) *AttributeDefinition {
+	a.Reference_id = code
+	return a
+}
+func (a *AttributeDefinition) WithTenantID(code string) *AttributeDefinition {
+	a.Tenant_id = code
+	return a
+}
+func (a *AttributeDefinition) WithValue(code []string) *AttributeDefinition {
+	a.Values = code
+	return a
+}
+func (a *AttributeDefinition) WithIsActive(code bool) *AttributeDefinition {
+	a.Is_active = code
+	return a
+}
+func (a *AttributeDefinition) WithRequired(code bool) *AttributeDefinition {
+	a.Required = code
+	return a
+}
+func (a *AttributeDefinition) WithRegex(code string) *AttributeDefinition {
+	a.Regex = code
+	return a
+}
+func (a *AttributeDefinition) WithOrder(code string) *AttributeDefinition {
+	a.Order = code
+	return a
+}
+func (a *AttributeDefinition) WithAuditDetail(code *AuditDetails) *AttributeDefinition {
+	a.Audit_details = code
+	return a
+}
+func (a *AttributeDefinition) WithAdditionalDeatils(code map[string]interface{}) *AttributeDefinition {
+	a.Additional_details = code
+	return a
+}
+func (a *AttributeDefinition) Build() (*AttributeDefinition, error) {
+	err := a.Validate()
+	if err != nil {
+		return nil, err
+	}
+	return a, nil
+}
+func (a *ServiceDefinition) WithCode(code string) *ServiceDefinition {
+	a.Code = code
+	return a
+}
+func (a *ServiceDefinition) WithTenantID(code string) *ServiceDefinition {
+	a.TenantID = code
+	return a
+}
+
+func (a *ServiceDefinition) WithAttributes(code []AttributeDefinition) *ServiceDefinition {
+	a.AttributeS = code
+	return a
+}
+func (a *ServiceDefinition) WithId(code string) *ServiceDefinition {
+	a.Id = code
+	return a
+}
+func (a *ServiceDefinition) WithIsActive(code bool) *ServiceDefinition {
+	a.IsActive = code
+	return a
+}
+func (a *ServiceDefinition) WithClientId(code string) *ServiceDefinition {
+	a.ClientID = code
+	return a
+}
+func (a *ServiceDefinition) WithAuditDetail(code *AuditDetails) *ServiceDefinition {
+	a.AuditDetails = code
+	return a
+}
+func (a *ServiceDefinition) WithAdditionalDeatils(code map[string]interface{}) *ServiceDefinition {
+	a.AdditionalDetails = code
+	return a
+}
+func (a *ServiceDefinition) Build() (*ServiceDefinition, error) {
+	err := a.Validate()
+	if err != nil {
+		return nil, err
+	}
+	return a, nil
+}
+func (s *ServiceDefinitionCriteria) WithTenantID(code string) *ServiceDefinitionCriteria {
+	s.TenantID = code
+	return s
+}
+func (s *ServiceDefinitionCriteria) WithIDs(code []string) *ServiceDefinitionCriteria {
+	s.Ids = code
+	return s
+}
+func (s *ServiceDefinitionCriteria) WithCodes(code []string) *ServiceDefinitionCriteria {
+	s.Codes = code
+	return s
+}
+func (s *ServiceDefinitionCriteria) WithClientID(code string) *ServiceDefinitionCriteria {
+	s.ClientID = code
+	return s
+}
+func (s *ServiceDefinitionCriteria) Build() (*ServiceDefinitionCriteria, error) {
 	err := s.Validate()
 	if err != nil {
 		return nil, err

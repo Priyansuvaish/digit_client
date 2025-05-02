@@ -37,19 +37,19 @@ func IdRequestBuilder() *IDRequest {
 	return &IDRequest{}
 }
 
-func (idRequest *IDRequest) SetIdName(idname string) *IDRequest {
+func (idRequest *IDRequest) WithIdName(idname string) *IDRequest {
 	idRequest.Idname = idname
 	return idRequest
 }
-func (idRequest *IDRequest) SetTenantID(tenantID string) *IDRequest {
+func (idRequest *IDRequest) WithTenantID(tenantID string) *IDRequest {
 	idRequest.TenantID = tenantID
 	return idRequest
 }
-func (idRequest *IDRequest) SetFormat(format string) *IDRequest {
+func (idRequest *IDRequest) WithFormat(format string) *IDRequest {
 	idRequest.Format = format
 	return idRequest
 }
-func (idRequest *IDRequest) SetCount(count int) *IDRequest {
+func (idRequest *IDRequest) WithCount(count int) *IDRequest {
 	idRequest.Count = count
 	return idRequest
 }

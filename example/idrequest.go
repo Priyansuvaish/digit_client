@@ -1,4 +1,4 @@
-package main
+package example
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func main() {
+func Idrequestexample() {
 	// Initialize the configuration
 	config.GetGlobalConfig().Initialize(
 		"https://sandbox.digit.org",

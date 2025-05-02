@@ -1,17 +1,18 @@
-package main
+package example
 
 import (
 	"fmt"
 	"log"
+
 	"github.com/Priyansuvaish/digit_client/client"
 	"github.com/Priyansuvaish/digit_client/models"
 	"github.com/Priyansuvaish/digit_client/services"
 )
 
-func main() {
+func Userexample() {
 	// Create a new API client with DIGIT sandbox URL
 	apiClient := client.NewAPIClient("https://sandbox.digit.org", "")
-	
+
 	// Create user service
 	userService := services.NewUserService(apiClient)
 
@@ -22,7 +23,7 @@ func main() {
 		WithVersion("1.0").
 		WithAction("create").
 		WithUserInfo(map[string]interface{}{
-			"id": "1",
+			"id":   "1",
 			"name": "System",
 		})
 
@@ -87,4 +88,4 @@ func main() {
 		log.Fatalf("Error updating profile: %v", err)
 	}
 	fmt.Printf("Update Profile Response: %v\n", updateResult)
-} 
+}

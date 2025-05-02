@@ -22,7 +22,7 @@ func NewIDRequestService(apiClient *client.APIClient) *IDRequestService {
 	}
 }
 
-func (s *IDRequestService) Generate_id(id *models.IDRequest, requestInfo *models.RequestInfo) (interface{}, error) {
+func (s *IDRequestService) Generate_id(id []*models.IDRequest, requestInfo *models.RequestInfo) (interface{}, error) {
 	if requestInfo == nil {
 		// Get the singleton instance of RequestConfig
 		requestConfig := (&models.RequestConfig{}).GetInstance()
@@ -32,7 +32,13 @@ func (s *IDRequestService) Generate_id(id *models.IDRequest, requestInfo *models
 	//create the payload
 	payload := map[string]interface{}{
 		"RequestInfo": requestInfo.ToMap(),
-		"IDRequest":   id.ToMap(),
+		"IDRequest": func() []map[string]interface{} {
+			var idRequests []map[string]interface{}
+			for _, id := range id {
+				idRequests = append(idRequests, id.ToMap())
+			}
+			return idRequests
+		}(),
 	}
 	//make the request
 	return s.apiClient.Post(s.baseURL+"/_generate", payload, nil, nil, nil, nil, true)

@@ -20,7 +20,7 @@ func NewMdmsV2Service(apiClient *client.APIClient) *MdmsV2Service {
 	return &MdmsV2Service{
 		apiClient:     apiClient,
 		baseURL:       "mdms-v2/schema/v1",
-		Mdms_base_url: "mdms-v2/mdms/v1",
+		Mdms_base_url: "mdms-v2/v2",
 	}
 }
 

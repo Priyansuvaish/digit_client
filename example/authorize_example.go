@@ -1,4 +1,4 @@
-package main
+package example
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func main() {
+func AuthorizeExample() {
 	// Create a new API client with DIGIT sandbox URL
 	// apiClient := client.NewAPIClient("https://sandbox.digit.org", "")
 	config.GetGlobalConfig().Initialize(

@@ -18,7 +18,7 @@ func (idRequest *IDRequest) Validate() error {
 	if idRequest.TenantID == "" || len(idRequest.TenantID) > 200 {
 		return fmt.Errorf("tenant_id must be between 1 and 200 characters")
 	}
-	if idRequest.Format == "" || len(idRequest.Format) > 200 {
+	if len(idRequest.Format) > 200 {
 		return fmt.Errorf("format must be between 1 and 200 characters")
 	}
 	return nil

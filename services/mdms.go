@@ -1,6 +1,8 @@
 package services
 
 import (
+	"fmt"
+
 	"github.com/Priyansuvaish/digit_client/client"
 	"github.com/Priyansuvaish/digit_client/models"
 )
@@ -35,6 +37,7 @@ func (s *MDMSService) Search(criteria *models.MdmsCriteria, requestinfo *models.
 		"MdmsCriteria": criteria.ToMap(),
 		"RequestInfo":  requestinfo.ToMap(),
 	}
+	fmt.Println("payload", payload)
 
 	// Make the Post request using the API client
 	return s.apiClient.Post(endpoint, payload, nil, nil, nil, nil, true)

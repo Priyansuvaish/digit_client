@@ -70,18 +70,31 @@ func (md *MdmsCriteria) Validate() error {
 }
 
 func (md *MdmsCriteria) ToMap() map[string]interface{} {
-	result := make([]map[string]interface{}, len(md.ModuleDetails))
-	for i, moduleDetail := range md.ModuleDetails {
-		result[i] = moduleDetail.ToMap()
+	payload := map[string]interface{}{
+		"tenantId":      md.TenantId,
+		"moduleDetails": make([]interface{}, 0, len(md.ModuleDetails)),
 	}
-	return map[string]interface{}{
-		"tenantId":             md.TenantId,
-		"moduleDetails":        result,
-		"ids":                  md.Ids,
-		"uniqueIdentifier":     md.Uniqueidentifer,
-		"schemaCodeFilter1map": md.SchemaCodeFilter1map,
-		"isActive":             md.IsActive,
+
+	// Add module details (always include even if empty)
+	for _, moduleDetail := range md.ModuleDetails {
+		payload["moduleDetails"] = append(payload["moduleDetails"].([]interface{}), moduleDetail.ToMap())
 	}
+
+	// Conditionally add other fields ONLY if they have values
+	if len(md.Ids) > 0 {
+		payload["ids"] = md.Ids
+	}
+	if md.Uniqueidentifer != "" {
+		payload["uniqueIdentifier"] = md.Uniqueidentifer
+	}
+	if len(md.SchemaCodeFilter1map) > 0 {
+		payload["schemaCodeFilter1map"] = md.SchemaCodeFilter1map
+	}
+	if md.IsActive { // Only include if true
+		payload["isActive"] = md.IsActive
+	}
+
+	return payload
 }
 
 func MasterDetailBuilder() *MasterDetail {

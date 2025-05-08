@@ -94,7 +94,7 @@ import (
 	"os"
 
 	// "github.com/Priyansuvaish/digit_client/client"
-	"github.com/Priyansuvaish/digit_client/config"
+	"github.com/Priyansuvaish/digit_client/configdigit"
 	"github.com/Priyansuvaish/digit_client/models"
 	"github.com/Priyansuvaish/digit_client/services"
 )
@@ -144,7 +144,7 @@ func main() {
 
 	// fmt.Println(".env file updated successfully")
 
-	config.GetGlobalConfig().Initialize(
+	configdigit.GetGlobalConfig().Initialize(
 		"https://unified-dev.digit.org",
 		"",
 	)

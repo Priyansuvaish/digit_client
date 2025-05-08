@@ -10,7 +10,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/Priyansuvaish/digit_client/config"
+	"github.com/Priyansuvaish/digit_client/configdigit"
 )
 
 // APIClient represents the main client for making API requests
@@ -30,7 +30,7 @@ func NewAPIClient(baseURL, authToken string) *APIClient {
 }
 func DefaultAPIClient() *APIClient {
 	// Get singleton instance
-	gc := config.GetGlobalConfig()
+	gc := configdigit.GetGlobalConfig()
 	info := gc.GetInfo()
 
 	// Add safety checks

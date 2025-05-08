@@ -1,4 +1,4 @@
-package config
+package configdigit
 
 // Config holds the configuration for the DIGIT client
 type Config struct {

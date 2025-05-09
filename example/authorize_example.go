@@ -193,48 +193,8 @@ func main() {
 			"type":         "EMPLOYEE",
 			"roles": []map[string]interface{}{
 				{
-					"name":     "Microplan Campaign integrator",
-					"code":     "MICROPLAN_CAMPAIGN_INTEGRATOR",
-					"tenantId": "dev",
-				},
-				{
-					"name":     "Campaign Managers",
-					"code":     "CAMPAIGN_MANAGER",
-					"tenantId": "dev",
-				},
-				{
-					"name":     "System Administrator",
-					"code":     "SYSTEM_ADMINISTRATOR",
-					"tenantId": "dev",
-				},
-				{
-					"name":     "Boundary Manager",
-					"code":     "BOUNDARY_MANAGER",
-					"tenantId": "dev",
-				},
-				{
-					"name":     "Campaign Admin",
-					"code":     "CAMPAIGN_ADMIN",
-					"tenantId": "dev",
-				},
-				{
-					"name":     "Localisation admin",
-					"code":     "LOC_ADMIN",
-					"tenantId": "dev",
-				},
-				{
-					"name":     "Microplan Admin",
-					"code":     "MICROPLAN_ADMIN",
-					"tenantId": "dev",
-				},
-				{
-					"name":     "HRMS Admin",
-					"code":     "HRMS_ADMIN",
-					"tenantId": "dev",
-				},
-				{
-					"name":     "MDMS ADMIN",
-					"code":     "MDMS_ADMIN",
+					"name":     "STUDIO ADMIN",
+					"code":     "STUDIO_ADMIN",
 					"tenantId": "dev",
 				},
 			},

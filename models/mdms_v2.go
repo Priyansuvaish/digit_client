@@ -208,7 +208,7 @@ func (s *SchemaDefCriteria) Build() *SchemaDefCriteria {
 
 type Mdms struct {
 	TenantID         string         `json:"tenantId"`
-	SchemeCode       string         `json:"schemeCode"`
+	SchemaCode       string         `json:"schemaCode"`
 	Data             map[string]any `json:"data"`
 	ID               string         `json:"id"`
 	UniqueIdentifier string         `json:"uniqueIdentifier"`
@@ -223,7 +223,7 @@ func (m *Mdms) Validate() error {
 	if len(m.TenantID) < 2 || len(m.TenantID) > 128 {
 		return fmt.Errorf("tenant_id must be between 2 and 128 characters")
 	}
-	if m.SchemeCode != "" && len(m.SchemeCode) < 2 || len(m.SchemeCode) > 128 {
+	if m.SchemaCode != "" && len(m.SchemaCode) < 2 || len(m.SchemaCode) > 128 {
 		return fmt.Errorf("scheme_code must be between 2 and 128 characters")
 	}
 	if m.UniqueIdentifier != "" && len(m.UniqueIdentifier) < 1 || len(m.UniqueIdentifier) > 128 {
@@ -235,7 +235,7 @@ func (m *Mdms) Validate() error {
 func (m *Mdms) ToMap() map[string]interface{} {
 	return map[string]interface{}{
 		"tenantId":         m.TenantID,
-		"schemeCode":       m.SchemeCode,
+		"schemaCode":       m.SchemaCode,
 		"data":             m.Data,
 		"id":               m.ID,
 		"uniqueIdentifier": m.UniqueIdentifier,
@@ -253,9 +253,9 @@ func (m *Mdms) WithTenantID(tenantID string) *Mdms {
 	return m
 }
 
-func (m *Mdms) WithSchemeCode(schemeCode string) *Mdms {
+func (m *Mdms) WithSchemaCode(schemaCode string) *Mdms {
 
-	m.SchemeCode = schemeCode
+	m.SchemaCode = schemaCode
 	return m
 }
 
@@ -302,7 +302,7 @@ type MdmsCriteriaV2 struct {
 	TenantID                           string         `json:"tenantId"`
 	IDS                                []string       `json:"ids"`
 	UniqueIdentifiers                  []string       `json:"uniqueIdentifiers"`
-	SchemaCode                         string         `json:"schemeCode"`
+	SchemaCode                         string         `json:"schemaCode"`
 	FilterMap                          map[string]any `json:"filterMap"`
 	IsActive                           bool           `json:"isActive"`
 	SchemaCodeFilterMap                map[string]any `json:"schemaCodeFilterMap"`
@@ -326,18 +326,38 @@ func (m *MdmsCriteriaV2) Validate() error {
 }
 
 func (m *MdmsCriteriaV2) ToMap() map[string]interface{} {
-	return map[string]interface{}{
-		"tenantId":                            m.TenantID,
-		"ids":                                 m.IDS,
-		"uniqueIdentifiers":                   m.UniqueIdentifiers,
-		"schemeCode":                          m.SchemaCode,
-		"filters":                             m.FilterMap,
-		"isActive":                            m.IsActive,
-		"schemaCodeFilterMap":                 m.SchemaCodeFilterMap,
-		"uniqueIdentifiersForRefVerification": m.UniqueIdentifierForRefVerification,
-		"offset":                              m.Offeset,
-		"limit":                               m.Limit,
+	result := make(map[string]interface{})
+	if m.TenantID != "" {
+		result["tenantId"] = m.TenantID
 	}
+	if len(m.IDS) > 0 {
+		result["ids"] = m.IDS
+	}
+	if len(m.UniqueIdentifiers) > 0 {
+		result["uniqueIdentifiers"] = m.UniqueIdentifiers
+	}
+	if m.SchemaCode != "" {
+		result["schemaCode"] = m.SchemaCode
+	}
+	if len(m.FilterMap) > 0 {
+		result["filters"] = m.FilterMap
+	}
+	if m.IsActive {
+		result["isActive"] = m.IsActive
+	}
+	if len(m.SchemaCodeFilterMap) > 0 {
+		result["schemaCodeFilterMap"] = m.SchemaCodeFilterMap
+	}
+	if len(m.UniqueIdentifierForRefVerification) > 0 {
+		result["uniqueIdentifiersForRefVerification"] = m.UniqueIdentifierForRefVerification
+	}
+	if m.Offeset != 0 {
+		result["offset"] = m.Offeset
+	}
+	if m.Limit != 0 {
+		result["limit"] = m.Limit
+	}
+	return result
 }
 
 func MdmsCriteriaV2Builder() *MdmsCriteriaV2 {

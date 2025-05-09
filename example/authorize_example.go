@@ -165,16 +165,92 @@ func main() {
 		1709096352589,                          // ts
 	)
 
-	masterdeatils, err := models.MasterDetailBuilder().WithName("ServiceConfiguration").Build()
-	moduledetails := models.ModuleDetailBuilder().WithModuleName("Studio").WithMasterDetails([]models.MasterDetail{*masterdeatils})
-	MdmsCriteria := models.MdmsCriteriaBuilder().WithTenantId("dev").WithModuleDetails([]models.ModuleDetail{*moduledetails})
-	mdmsserice := services.NewMDMSService(nil)
-	// Call CreateMDMS method
-	createdMDMS, err := mdmsserice.Search(MdmsCriteria, nil)
+	// masterdeatils, err := models.MasterDetailBuilder().WithName("ServiceConfiguration").Build()
+	// moduledetails := models.ModuleDetailBuilder().WithModuleName("Studio").WithMasterDetails([]models.MasterDetail{*masterdeatils})
+	// MdmsCriteria := models.MdmsCriteriaBuilder().WithTenantId("dev").WithModuleDetails([]models.ModuleDetail{*moduledetails})
+	// mdmsserice := services.NewMDMSService(nil)
+	// // Call CreateMDMS method
+	// createdMDMS, err := mdmsserice.Search(MdmsCriteria, nil)
+
+	filter := map[string]interface{}{
+		"service": "NewTL",
+		"module":  "Tradelicense",
+	}
+	MdmsCriteria := models.MdmsCriteriaV2Builder().WithTenantID("dev").WithFilterMap(filter).WithSchemaCode("Studio.ServiceConfiguration").WithLimit(10).WithOffeset(0).Build()
+	mdmsserice := services.NewMdmsV2Service(nil, "egov-mdms-service/v2")
+	requestInfo := &models.RequestInfo{
+		APIID:     "Rainmaker",
+		MsgID:     "1746604980047|en_IN",
+		AuthToken: "1b37afc2-d02b-4cb5-8d0c-6e79161ba72f",
+		UserInfo: map[string]interface{}{
+			"id":           10476,
+			"uuid":         "f4e90853-80b7-47cc-91e7-f8cd5ec00e20",
+			"userName":     "CONSOLE",
+			"name":         "Jagankumar",
+			"mobileNumber": "9994100121",
+			"emailId":      "raj@gmail.com",
+			"locale":       nil,
+			"type":         "EMPLOYEE",
+			"roles": []map[string]interface{}{
+				{
+					"name":     "Microplan Campaign integrator",
+					"code":     "MICROPLAN_CAMPAIGN_INTEGRATOR",
+					"tenantId": "dev",
+				},
+				{
+					"name":     "Campaign Managers",
+					"code":     "CAMPAIGN_MANAGER",
+					"tenantId": "dev",
+				},
+				{
+					"name":     "System Administrator",
+					"code":     "SYSTEM_ADMINISTRATOR",
+					"tenantId": "dev",
+				},
+				{
+					"name":     "Boundary Manager",
+					"code":     "BOUNDARY_MANAGER",
+					"tenantId": "dev",
+				},
+				{
+					"name":     "Campaign Admin",
+					"code":     "CAMPAIGN_ADMIN",
+					"tenantId": "dev",
+				},
+				{
+					"name":     "Localisation admin",
+					"code":     "LOC_ADMIN",
+					"tenantId": "dev",
+				},
+				{
+					"name":     "Microplan Admin",
+					"code":     "MICROPLAN_ADMIN",
+					"tenantId": "dev",
+				},
+				{
+					"name":     "HRMS Admin",
+					"code":     "HRMS_ADMIN",
+					"tenantId": "dev",
+				},
+				{
+					"name":     "MDMS ADMIN",
+					"code":     "MDMS_ADMIN",
+					"tenantId": "dev",
+				},
+			},
+			"active":        true,
+			"tenantId":      "dev",
+			"permanentCity": nil,
+		},
+	}
+	// fmt.Println(requestInfo)
+	// fmt.Println(MdmsCriteria.ToMap())
+	search, err := mdmsserice.SearchMDMS(MdmsCriteria, requestInfo)
+
 	if err != nil {
 		log.Printf("API call failed: %v", err)
 	}
-	fmt.Println("MDMS created:", createdMDMS.(map[string]interface{}))
+	fmt.Println("MDMS created:", search)
 
 	// // Optionally do something with createdMDMS
 	// mdmsRes, ok := createdMDMS.(map[string]interface{})["MdmsRes"].(map[string]interface{})

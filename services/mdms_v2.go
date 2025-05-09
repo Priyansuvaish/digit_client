@@ -13,14 +13,19 @@ type MdmsV2Service struct {
 }
 
 // NewMdmsV2Service creates a new instance of MdmsV2Service
-func NewMdmsV2Service(apiClient *client.APIClient) *MdmsV2Service {
+func NewMdmsV2Service(apiClient *client.APIClient, Mdms_base_url string) *MdmsV2Service {
 	if apiClient == nil {
 		apiClient = client.DefaultAPIClient()
 	}
 	return &MdmsV2Service{
-		apiClient:     apiClient,
-		baseURL:       "mdms-v2/schema/v1",
-		Mdms_base_url: "mdms-v2/v2",
+		apiClient: apiClient,
+		baseURL:   "mdms-v2/schema/v1",
+		Mdms_base_url: func() string {
+			if Mdms_base_url != "" {
+				return Mdms_base_url
+			}
+			return "mdms-v2/v2"
+		}(),
 	}
 }
 

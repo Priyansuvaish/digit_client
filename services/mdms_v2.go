@@ -1,6 +1,9 @@
 package services
 
 import (
+	"encoding/json"
+	"fmt"
+
 	"github.com/Priyansuvaish/digit_client/client"
 	"github.com/Priyansuvaish/digit_client/models"
 )
@@ -97,6 +100,8 @@ func (s *MdmsV2Service) SearchMDMS(body *models.MdmsCriteriaV2, requestinfo *mod
 		"MdmsCriteria": body.ToMap(),
 	}
 	endpoint := s.Mdms_base_url + "/_search"
+	jsonData, _ := json.Marshal(body)
+	fmt.Println(string(jsonData))
 	return s.apiClient.Post(endpoint, payload, nil, nil, nil, nil, true)
 }
 
